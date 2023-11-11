@@ -8,12 +8,12 @@ class Filme:
     ano = -1
     codico = -1
 
-def imprime_filme(lista_filmes,indice):
-    print(f"Título: {lista_filmes[indice].titulo}")
-    print(f"Gênero: {lista_filmes[indice].genero}")
-    print(f"Duração: {lista_filmes[indice].duracao}")
-    print(f"Ano de lançamento: {lista_filmes[indice].ano}")
-    print(f"Código: {lista_filmes[indice].codigo}")
+def imprime_filme(filme):
+    print(f"Título: {filme.titulo}")
+    print(f"Gênero: {filme.genero}")
+    print(f"Duração: {filme.duracao}")
+    print(f"Ano de lançamento: {filme.ano}")
+    print(f"Código: {filme.codigo}")
 
 def buscar_filme(lista_filmes,codigo):
     i = 0
@@ -54,12 +54,12 @@ def Inserindo_filme(lista_filmes):
     filme.duracao = int(input("Digite a duração do filme: "))
     filme.ano = int(input("Digite o ano de lançamento do filme: "))
     filme.codigo = int(input("Digite o código do filme: "))
-    achou = True
-    while achou == True:
-        achou = False
+    invalidCode = True
+    while invalidCode:
+        invalidCode = False
         for elem in lista_filmes:
             if filme.codigo == elem.codigo and elem.deletado == 0:
-                achou = True
+                invalidCode = True
                 print("Código inválido!!!")
                 print()
                 filme.codigo = int(input("Digite outro código para o Filme: "))
@@ -82,27 +82,22 @@ def listando_filme(lista_filmes):
         for filme in lista_filmes:
             if filme.deletado == 0:
                 numero_filmes += 1
-                print(f"Filme [{numero_filmes}]:")
-                imprime_filme(lista_filmes,indice_filme)
+                print(f"Filme [{numero_filmes}]: ")
+                imprime_filme(filme)
                 print("-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=--=-=-=-=-=-=-")
-            indice_filme += 1
 
 def procurando_filme(lista_filme):
     code = int(input("Digite o código do filme: "))
-    achou = False
     i = 0
     print()
     for filme in lista_filme:
-        if filme.codigo == code and filme.deletado == False:
-            achou = True
+        if filme.codigo == code and filme.deletado == 0:
             print("Filme encontrado!!")
             print("-=-=-=-=-=--=-=-=-=-=-=-=-")
-            imprime_filme(lista_filme,i)
+            imprime_filme(filme)
             print("-=-=-=-=-=--=-=-=-=-=-=-=-")
-            break
-        i += 1
-    if achou == False:
-        print("Não há nenhum filme com este código.")
+            return
+    print("Não há nenhum filme com este código.")
 
 def salvar_filmes(filmes):
     arq = open("filmes.txt",'w')
@@ -130,15 +125,12 @@ def abrir_arquivo(nome_arquivo):
 
 def remover_filme(lista_filmes):
     code = int(input("Insira o código do filme: "))
-    deletou = False
     for filme in lista_filmes:
         if code == filme.codigo and filme.deletado == 0:
             filme.deletado = 1
-            deletou = True
             print("Deletado com sucesso!")
-            break
-    if not deletou:
-        print("O Filme não foi encontrado.")
+            return lista_filmes
+    print("O Filme não foi encontrado.")
     return lista_filmes
 
 def editar_filme(lista_filmes):

@@ -5,6 +5,17 @@ class Salas:
     numero = -1
     capacidade = -1 #100 ou 200
 
+def numeroValido(msgInput):
+    EhNumero = False
+    while not EhNumero:
+        numero = input(msgInput)
+        if not numero.isnumeric():
+            print("\nNúmero Inválido!")
+            print("Favor digitar um número inteiro \n")
+        else:
+            EhNumero = True
+    return numero
+
 def isNumber(numero):
     if(str(numero).isnumeric()):
         return True
@@ -32,37 +43,41 @@ def sobrescreverArquivo(nomeArquivo , salas):
         arq.write(str(sala.deletado) + ';' + str(sala.numero) + ';' + str(sala.capacidade) + "\n")
     arq.close
 
+def leNumeroDaSala(salas):
+    numeroDeSalaInvalido = True
+    while numeroDeSalaInvalido:
+        numeroDeSalaInvalido = False
+        numero = int(numeroValido("Digite o Número da sala:"))
+        for elem in salas:
+            if numero == elem.numero and elem.deletado == 0:
+                numeroDeSalaInvalido = True
+                print("Já existe uma sala com este número")
+                break
+    return numero
+
+
 def inserirSala(salas):
     sala = Salas()
     sala.deletado = 0
-
-
-    EhNumero = False
-    while not EhNumero:
-        sala.numero = input("Digite o Número da sala:")
-        if not sala.numero.isnumeric():
-            EhNumero = False
-            print("\nNúmero Inválido!")
-            print("Favor digitar um número inteiro\n")
-        elif acharSala(salas,sala.numero) != -1:
-            print("Numero Repetido")
-        else:
-            EhNumero = True
-
-
-    EhNumero = False
-    while not EhNumero:
-        sala.capacidade = input("Digite a Capacidade (100 ou 200):")
-        if not sala.capacidade.isnumeric():
-            EhNumero = False
-            print("\nNúmero Inválido!")
-            print("Favor digitar um número inteiro\n")
-        elif int(sala.capacidade) != 100 and int(sala.capacidade) != 200:
-            EhNumero = False
-            print("\nCapacidade Inválida!")
-            print("Favor digitar um número dentre as opções\n")
-        else:
-            EhNumero = True
+    sala.numero = -1
+    sala.capacidade = 0
+    
+    sala.numero = leNumeroDaSala(salas);
+    while sala.capacidade != 100 and sala.capacidade != 200:
+        sala.capacidade = int(numeroValido("Digite a Capacidade (100 ou 200):"))
+    # EhNumero = False
+    # while not EhNumero:
+    #     sala.capacidade = input("Digite a Capacidade (100 ou 200):")
+    #     if not sala.capacidade.isnumeric():
+    #         EhNumero = False
+    #         print("\nNúmero Inválido!")
+    #         print("Favor digitar um número inteiro\n")
+    #     elif int(sala.capacidade) != 100 and int(sala.capacidade) != 200:
+    #         EhNumero = False
+    #         print("\nCapacidade Inválida!")
+    #         print("Favor digitar um número dentre as opções\n")
+    #     else:
+    #         EhNumero = True
     salas.append(sala)
     return salas
 
