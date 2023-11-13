@@ -19,7 +19,7 @@ def buscar_filme(lista_filmes,codigo):
     i = 0
     for filme in lista_filmes:
         if codigo == filme.codigo and filme.deletado == 0:
-            return i
+            return filme
         i += 1
     print("Filme não encontrado")
     return -1
@@ -135,43 +135,44 @@ def remover_filme(lista_filmes):
 
 def editar_filme(lista_filmes):
     code = int(input("Digite o código do filme que deseja editar: "))
-    indice = buscar_filme(lista_filmes,code)
-    if indice >= 0:
+    filme = buscar_filme(lista_filmes,code)
+    if filme != -1:
         opcao = menu_editar()
         if opcao == '1':
-            return editar_Titulo_filme(lista_filmes,indice)
-        if opcao == '2':
-            return editar_Genero_filme(lista_filmes,indice)
-        if opcao == '3':
-            return editar_Duracao_filme(lista_filmes,indice)
-        if opcao == '4':
-            return editar_Ano_filme(lista_filmes,indice)
-        print("Opção não reconhecida!")
+            filme = editar_Titulo_filme(filme)
+        elif opcao == '2':
+            filme = editar_Genero_filme(filme)
+        elif opcao == '3':
+            filme = editar_Duracao_filme(filme)
+        elif opcao == '4':
+            filme = editar_Ano_filme(filme)
+        else:
+            print("Opção não reconhecida!")
     return lista_filmes
 
-def editar_Titulo_filme(lista_filmes,indice):
-    print(f"Título atual: {lista_filmes[indice].titulo}")
+def editar_Titulo_filme(filme):
+    print(f"Título atual: {filme.titulo}")
     print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
-    lista_filmes[indice].titulo = input("Título novo: ")
-    return lista_filmes
+    filme.titulo = input("Título novo: ")
+    return filme
 
-def editar_Genero_filme(lista_filmes,indice):
-    print(f"Gênero atual: {lista_filmes[indice].genero}")
+def editar_Genero_filme(filme):
+    print(f"Gênero atual: {filme.genero}")
     print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
-    lista_filmes[indice].genero = input("Gênero novo: ")
-    return lista_filmes
+    filme.genero = input("Gênero novo: ")
+    return filme
 
-def editar_Duracao_filme(lista_filmes,indice):
-    print(f"Duração atual: {lista_filmes[indice].duracao}")
+def editar_Duracao_filme(filme):
+    print(f"Duração atual: {filme.duracao}")
     print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
-    lista_filmes[indice].duracao = input("Duração nova: ")
-    return lista_filmes
+    filme.duracao = input("Duração nova: ")
+    return filme
 
-def editar_Ano_filme(lista_filmes,indice):
-    print(f"Ano de Lançamento atual: {lista_filmes[indice].ano}")
+def editar_Ano_filme(filme):
+    print(f"Ano de Lançamento atual: {filme.ano}")
     print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
-    lista_filmes[indice].ano = input("Ano de Lançamento novo: ")
-    return lista_filmes
+    filme.ano = input("Ano de Lançamento novo: ")
+    return filme
 
 def main():
     filmes = abrir_arquivo("filmes.txt")
