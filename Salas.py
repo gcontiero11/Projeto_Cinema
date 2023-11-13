@@ -65,19 +65,6 @@ def inserirSala(salas):
     sala.numero = leNumeroDaSala(salas);
     while sala.capacidade != 100 and sala.capacidade != 200:
         sala.capacidade = int(numeroValido("Digite a Capacidade (100 ou 200):"))
-    # EhNumero = False
-    # while not EhNumero:
-    #     sala.capacidade = input("Digite a Capacidade (100 ou 200):")
-    #     if not sala.capacidade.isnumeric():
-    #         EhNumero = False
-    #         print("\nNúmero Inválido!")
-    #         print("Favor digitar um número inteiro\n")
-    #     elif int(sala.capacidade) != 100 and int(sala.capacidade) != 200:
-    #         EhNumero = False
-    #         print("\nCapacidade Inválida!")
-    #         print("Favor digitar um número dentre as opções\n")
-    #     else:
-    #         EhNumero = True
     salas.append(sala)
     return salas
 
@@ -105,51 +92,40 @@ def acharSala(salas,num):
     i = 0
     for sala in salas:
         if sala.numero == int(num):
-            return i
+            return sala
         i += 1
     return -1
 
 def procurarSala(salas):
-    EhNumero = False
-    while not EhNumero:
-        numero = input("Digite o Número da sala ou 0 caso queira voltar: ")
-        if not numero.isnumeric():
-            print("\nNúmero Inválido!")
-            print("Favor digitar um número inteiro \n")
-        else:
-            EhNumero = True
+    numero = numeroValido("Digite o Número da sala ou 0 caso queira voltar: ")
     if numero == "0":
         print("Voltando")
-    else:
+        pass
+    sala = acharSala(salas,int(numero))
+    while sala == -1:
+        print("\nSala não encontrada!")
+        print("Verifique se o número da sala existe")
+        numero = numeroValido("Digite o Número da sala ou 0 caso queira voltar: ")
+        if numero == "0":
+            print("Voltando")
+            pass
         sala = acharSala(salas,int(numero))
-        if sala == -1:
-            print("\nSala não encontrada!")
-            print("Verifique se o número da sala existe")
-            print("Caso queira  sair basta digitar 0\n")
-            procurarSala(salas)
-        else:
-            imprimirSala(sala,-1)
+    imprimirSala(sala,-1)
 
 def alteraSala(salas):
-    EhNumero = False
-    while not EhNumero:
-        numeroSala = input("Digite o numero da sala que deseja editar: ")
-        indice = acharSala(salas,numeroSala)    
-        if not isNumber(numeroSala):
-            print("-=-=-=--=-=-=-=-=-=-=-=-")
-            print("Favor digitar um numero!")
-            print("-=-=-=--=-=-=-=-=-=-=-=-")
-        elif indice == -1:
-            print("-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=")
-            print("Este numero de sala NÃO existe!")
-            print("-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=")
-        else:
-            EhNumero = True
+    numeroSala = numeroValido("Digite o numero da sala que deseja editar: ")
+    sala = acharSala(salas,numeroSala)
+    while sala == -1:
+        print("-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=")
+        print("Este numero de sala NÃO existe!")
+        print("-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=")
+        numeroSala = numeroValido("Digite o numero da sala que deseja editar: ")
+        sala = acharSala(salas,numeroSala)
     opcao = -1
     while opcao != '0':
         opcao = menuAlteraSala()
         if opcao == '1':
-            salas[indice].numero = alteraNumero(salas,salas[indice]) 
+            sala.numero = alteraNumeroSala(salas,sala) 
         elif opcao == '2':
             print(opcao) 
         elif opcao == '0':
@@ -176,7 +152,7 @@ def menuAlteraSala():
             EhNumero = True
     return opcao
 
-def alteraNumero(salas,sala):
+def alteraNumeroSala(salas,sala):
     EhNumero = False
     while not EhNumero:
         print(f"Numero antigo: {sala.numero}")
