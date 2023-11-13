@@ -1,5 +1,6 @@
 import Filmes
 import Salas
+import Sessoes
 
 def menu():
     print("Filmes.....[1]")
