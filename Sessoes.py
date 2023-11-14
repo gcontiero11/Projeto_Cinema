@@ -31,8 +31,8 @@ def abrirArquivoSessoes(nomeArquivo):
         sessao = Sessao()
         sessao.deletada = int(infos[0])
         sessao.codigo = int(infos[1])
-        sessao.sala = infos[2]
-        sessao.filme = infos[3]
+        sessao.sala.numero = infos[2]
+        sessao.filme.titulo = infos[3]
 
         sessoes.append(sessao)
     arq.close()
@@ -76,7 +76,7 @@ def abrirArquivoSalas(nomeArquivo):
 def sobrescreverArquivoSESSOES(sessoes):
     arq = open(f"sessoes.txt",'w')
     for sessao in sessoes:
-        arq.write(str(sessao.deletada) + ';' + str(sessao.codigo) +  ';' + str(sessao.sala) + ';' + str(sessao.filme) + "\n")
+        arq.write(str(sessao.deletada) + ';' + str(sessao.codigo) +  ';' + str(sessao.sala.numero) + ';' + str(sessao.filme.titulo) + "\n")
     arq.close
 
 def sobrescreverArquivoFILMES(filmes):
