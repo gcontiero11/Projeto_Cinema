@@ -1,0 +1,2 @@
+0;1;<Sessoes.Sala object at 0x000001AE11AB4820>;<Sessoes.Filme object at 0x000001AE11AB4400>
+0;1;<Sessoes.Sala object at 0x0000024B70584850>;<Sessoes.Filme object at 0x0000024B70584490>

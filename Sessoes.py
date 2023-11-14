@@ -18,8 +18,8 @@ class Sala:
 class Sessao:
     deletada = 0
     codigo = -1
-    sala = Salas
-    filme = Filme
+    sala = Sala()
+    filme = Filme()
 
 def abrirArquivoSessoes(nomeArquivo):
     sessoes = []
@@ -31,8 +31,8 @@ def abrirArquivoSessoes(nomeArquivo):
         sessao = Sessao()
         sessao.deletada = int(infos[0])
         sessao.codigo = int(infos[1])
-        sessao.sala = int(infos[2])
-        sessao.filme = int(infos[3])
+        sessao.sala = infos[2]
+        sessao.filme = infos[3]
 
         sessoes.append(sessao)
     arq.close()
@@ -52,9 +52,26 @@ def abrirArquivoFilmes(nomeArquivo):
         filme.duracao = int(infos[3])
         filme.ano = int(infos[4])
         filme.codigo = int(infos[5])
+
         filmes.append(filme)
     arq.close()
     return filmes
+
+def abrirArquivoSalas(nomeArquivo):
+    salas = []
+    if not os.path.exists(nomeArquivo):
+        return salas
+    arq = open(f"{nomeArquivo}" , 'r')
+    for linha in arq:
+        infos = linha.split(';')
+        sala = Sala()
+        sala.deletado = int(infos[0])
+        sala.numero = int(infos[1])
+        sala.capacidade = int(infos[2])
+
+        salas.append(sala)
+    arq.close()
+    return salas
 
 def sobrescreverArquivoSESSOES(sessoes):
     arq = open(f"sessoes.txt",'w')
@@ -109,12 +126,12 @@ def criaSessao(sessoes,filmes,salas):
     sessao.sala = solicitaSala(salas)
     while sessao.sala == -1:
         sessao.sala = solicitaSala(salas)
-    sessao.append(sessao)
+    sessoes.append(sessao)
     return sessoes    
 
 def imprimeSessao(sessao):
     print(f"Numero Sala: {sessao.sala.numero} ")
-    print(f"Nome Filme: {sessao.filme.nome} ")
+    print(f"Titulo Filme: {sessao.filme.titulo} ")
 
 def listarSessoes(sessoes):
     i = 0
@@ -139,12 +156,12 @@ def execSessoes():
         nomeArquivo = "sessoes.txt"
         sessoes = abrirArquivoSessoes(nomeArquivo)
         nomeArquivo = "filmes.txt"
-        filmes = abrirArquivoSessoes(nomeArquivo)
+        filmes = abrirArquivoFilmes(nomeArquivo)
         nomeArquivo = "salas.txt"
-        salas = abrirArquivoSessoes(nomeArquivo)
+        salas = abrirArquivoSalas(nomeArquivo)
 
         if option == 1:
-            sessoes = criaSessao()
+            sessoes = criaSessao(sessoes,filmes,salas)
             sobrescreverArquivoSESSOES(sessoes)
         if option == 2:
            listarSessoes(sessoes) 

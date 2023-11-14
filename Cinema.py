@@ -22,4 +22,6 @@ def main():
             Filmes.execFilmes()
         elif opcao == '2':
             Salas.execSalas()
+        elif opcao == '3':
+            Sessoes.execSessoes()
 main()
