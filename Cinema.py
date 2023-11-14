@@ -19,7 +19,7 @@ def main():
     while opcao != '0':
         opcao = menu()
         if opcao == '1':
-            Filmes.main()
+            Filmes.execFilmes()
         elif opcao == '2':
-            Salas.main()
+            Salas.execSalas()
 main()
