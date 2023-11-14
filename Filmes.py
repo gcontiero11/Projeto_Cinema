@@ -6,7 +6,7 @@ class Filme:
     genero = ""
     duracao = -1
     ano = -1
-    codico = -1
+    codigo = -1
 
 def imprime_filme(filme):
     print(f"Título: {filme.titulo}")
@@ -174,7 +174,7 @@ def editar_Ano_filme(filme):
     filme.ano = input("Ano de Lançamento novo: ")
     return filme
 
-def main():
+def execFilmes():
     filmes = abrir_arquivo("filmes.txt")
     opcao = "-1"
     while opcao != '0':

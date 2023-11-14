@@ -1,6 +1,6 @@
 import os
 
-class Salas:
+class Sala:
     deletado = 0
     numero = -1
     capacidade = -1 #100 ou 200
@@ -11,16 +11,11 @@ def retornaNumeroValido(msgInput):
         numero = input(msgInput)
         if not numero.isnumeric():
             print("\nNúmero Inválido!")
-            print("Favor digitar um número inteiro \n")
+            print("Favor digitar um número inteiro positivo \n")
         else:
             EhNumero = True
     return int(numero)
 
-def isNumber(numero):
-    if(str(numero).isnumeric()):
-        return True
-    else:
-        return False
 def abrirArquivo(nomeArquivo):
     salas = []
     if not os.path.exists(nomeArquivo):
@@ -28,7 +23,7 @@ def abrirArquivo(nomeArquivo):
     arq = open(f"{nomeArquivo}" , 'r')
     for linha in arq:
         infos = linha.split(';')
-        sala = Salas()
+        sala = Sala()
         sala.deletado = int(infos[0])
         sala.numero = int(infos[1])
         sala.capacidade = int(infos[2])
@@ -57,7 +52,7 @@ def leNumeroDaSala(salas):
 
 
 def inserirSala(salas):
-    sala = Salas()
+    sala = Sala()
     sala.deletado = 0
     sala.numero = -1
     sala.capacidade = 0
@@ -94,6 +89,7 @@ def acharSala(salas,num):
         if sala.numero == int(num):
             return sala
         i += 1
+    print("Sala não encontrada!")
     return -1
 
 def procurarSala(salas):
@@ -160,6 +156,7 @@ def alteraCapacidade(sala):
     print(f"Capacidade antiga: {sala.capacidade}")
     sala.capacidade = retornaNumeroValido("Capacidade nova: ")
     return sala.capacidade
+
 def menu():
     print("Escolha uma Opção")
     print("Inserir Sala........[1]")
@@ -169,7 +166,7 @@ def menu():
     print("Remover Sala........[5]")
     print("Sair................[0]")
 
-def main():
+def execSalas():
     menu()
     opcao = retornaNumeroValido("------------> ")
 
