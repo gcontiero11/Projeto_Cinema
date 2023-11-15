@@ -1,6 +1,7 @@
 import os
 
 class Filme:
+    id = "F000"
     deletado = 0
     titulo = ""
     genero = ""
@@ -8,17 +9,28 @@ class Filme:
     ano = -1
     codigo = -1
 
+def retornaNumeroValido(msgInput):
+    EhNumero = False
+    while not EhNumero:
+        numero = input(msgInput)
+        if not numero.isnumeric():
+            print("\nNúmero Inválido!")
+            print("Favor digitar um número inteiro positivo \n")
+        else:
+            EhNumero = True
+    return int(numero)
+
 def imprime_filme(filme):
+    print(f"ID do filme: {filme.id}")
     print(f"Título: {filme.titulo}")
     print(f"Gênero: {filme.genero}")
     print(f"Duração: {filme.duracao}")
     print(f"Ano de lançamento: {filme.ano}")
-    print(f"Código: {filme.codigo}")
 
-def buscar_filme(lista_filmes,codigo):
+def buscar_filme(lista_filmes,id):
     i = 0
     for filme in lista_filmes:
-        if codigo == filme.codigo and filme.deletado == 0:
+        if id == filme.id and filme.deletado == 0:
             return filme
         i += 1
     print("Filme não encontrado")
@@ -49,25 +61,25 @@ def menu_editar():
 def Inserindo_filme(lista_filmes):
     filme = Filme()
     filme.deletado = 0
+    filme.id =  "F" + input("Digite o ID do filme: ")
     filme.titulo = input("Digite o título: ")
     filme.genero = input("Digite o genero do filme: ")
     filme.duracao = int(input("Digite a duração do filme: "))
     filme.ano = int(input("Digite o ano de lançamento do filme: "))
-    filme.codigo = int(input("Digite o código do filme: "))
     invalidCode = True
     while invalidCode:
         invalidCode = False
         for elem in lista_filmes:
-            if filme.codigo == elem.codigo and elem.deletado == 0:
+            if filme.id == elem.id and elem.deletado == 0:
                 invalidCode = True
-                print("Código inválido!!!")
+                print("id inválido!!!")
                 print()
-                filme.codigo = int(input("Digite outro código para o Filme: "))
+                filme.id = int(input("Digite outro id para o Filme: "))
                 break
     lista_filmes.append(filme)
     print("Filme adicionado com sucesso!")
 
-def listando_filme(lista_filmes):
+def listando_filmes(lista_filmes):
     lista_vazia = True
     for filme in lista_filmes:
         if(filme.deletado == 0):
@@ -77,7 +89,6 @@ def listando_filme(lista_filmes):
         print("Não há filmes no catálogo.")
     else:
         numero_filmes = 0
-        indice_filme = 0
         print("-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=--=-=-=-=-=-=-")
         for filme in lista_filmes:
             if filme.deletado == 0:
@@ -87,11 +98,11 @@ def listando_filme(lista_filmes):
                 print("-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=--=-=-=-=-=-=-")
 
 def procurando_filme(lista_filme):
-    code = int(input("Digite o código do filme: "))
+    idFilme = int(input("Digite o id do filme: "))
     i = 0
     print()
     for filme in lista_filme:
-        if filme.codigo == code and filme.deletado == 0:
+        if filme.id == idFilme and filme.deletado == 0:
             print("Filme encontrado!!")
             print("-=-=-=-=-=--=-=-=-=-=-=-=-")
             imprime_filme(filme)
@@ -188,12 +199,18 @@ def execFilmes():
         elif opcao == '2':
             print("Listando Filme...")
             print()
-            listando_filme(filmes)
+            listando_filmes(filmes)
             print()
         elif opcao == '3':
             print("Procurando filme...")
             print()
-            procurando_filme(filmes)
+            print("Digite -1 caso queira ver a lista de filme!")
+            idProcurado =  str(retornaNumeroValido("Digite o ID do filme desejado: "))
+            idProcurado = "F" + idProcurado
+            if idProcurado == "-1":
+                listando_filmes(filmes)
+            else:
+                buscar_filme(filmes)
             print()
         elif opcao == '4':
             print("Removendo Filme...")

@@ -42,7 +42,7 @@ def leNumeroDaSala(salas):
     numeroDeSalaInvalido = True
     while numeroDeSalaInvalido:
         numeroDeSalaInvalido = False
-        numero = int(retornaNumeroValido("Digite o Número da sala:"))
+        numero = retornaNumeroValido("Digite o Número da sala:")
         for elem in salas:
             if numero == elem.numero and elem.deletado == 0:
                 numeroDeSalaInvalido = True
